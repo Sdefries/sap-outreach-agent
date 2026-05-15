@@ -1,0 +1,38 @@
+name: SAP Outreach — Daily Send
+
+on:
+  schedule:
+    # 9:00 AM ET = 13:00 UTC (EDT, UTC-4)
+    # Runs Mon-Fri. Holiday check is handled inside the Python script.
+    - cron: "0 13 * * 1-5"
+
+  # Allow manual trigger from GitHub Actions UI if needed
+  workflow_dispatch:
+
+jobs:
+  send-emails:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240  # 50 emails x 2 min stagger = ~100 mins max
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run send script
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+        run: python send_emails.py
+
+      - name: Commit sent results back to repo
+        run: |
+          git config --global user.name  "SAP Outreach Bot"
+          git config --global user.email "mhandy@sponsorapurpose.org"
+          git add outreach/sent/ outreach/logs/
+          git diff --staged --quiet || git commit -m "Outreach send — $(date +'%Y-%m-%d')"
+          git push
