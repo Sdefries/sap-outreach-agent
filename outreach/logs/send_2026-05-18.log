@@ -1,0 +1,8 @@
+2026-05-18 16:20:06,162  INFO  SAP Outreach Send Script — 2026-05-18
+2026-05-18 16:20:06,162  INFO  Found 1 queue file(s). Daily cap: 50
+2026-05-18 16:20:06,162  INFO  Processing: test-batch.csv
+2026-05-18 16:20:06,162  INFO  Sending 1/50 → sdefries@sponsorapurpose.org (Scott DeFries)
+2026-05-18 16:20:08,468  INFO  ✓ Sent to sdefries@sponsorapurpose.org
+2026-05-18 16:20:08,468  INFO  Waiting 120s before next send...
+2026-05-18 16:22:08,469  INFO  Archived to outreach/sent/test-batch_2026-05-18_16-22_results.csv
+2026-05-18 16:22:08,469  INFO  Done. Total sent today: 1/50
